@@ -1,6 +1,7 @@
-using DemoG01.BusinessLogic.Services;
+using DemoG01.BusinessLogic.Services.Classes;
+using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Data.Contexts;
-using DemoG01.DataAccess.Repositries;
+using DemoG01.DataAccess.Repositories.Departments;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoG01.Presentation
@@ -26,7 +27,7 @@ namespace DemoG01.Presentation
             #endregion
 
             var app = builder.Build();
-
+            #region Configure the HTTP request pipeline 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -44,7 +45,7 @@ namespace DemoG01.Presentation
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            #endregion
             app.Run();
         }
     }

@@ -1,4 +1,4 @@
-﻿using DemoG01.DataAccess.Models;
+﻿using DemoG01.DataAccess.Models.Departments;
 using System;
 using System.Collections.Generic;
 using System.Linq;

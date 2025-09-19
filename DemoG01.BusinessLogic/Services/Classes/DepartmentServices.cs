@@ -1,14 +1,15 @@
 ﻿using DemoG01.BusinessLogic.DataTransferObjects;
 using DemoG01.BusinessLogic.Factories;
+using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Models;
-using DemoG01.DataAccess.Repositries;
+using DemoG01.DataAccess.Repositories.Departments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoG01.BusinessLogic.Services
+namespace DemoG01.BusinessLogic.Services.Classes
 {
     public class DepartmentServices : IDepartmentServices
     {
