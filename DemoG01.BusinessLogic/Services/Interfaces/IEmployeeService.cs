@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace DemoG01.BusinessLogic.Services.Interfaces
 {
-    internal interface IEmployeeService
+    public interface IEmployeeService
     {
+        int CreateEmployee(CreatedEmployeeDto employeeDto);
+        bool DeleteEmployee(int value);
+        string? GetAllEmployees();
+        string? GetEmployeeById(int value);
+        void LogError();
+        void LogError(string message);
         int UpdateEmployee(UpdatedEmployeeDto employeeDto);
 
         public interface IEmployeeService

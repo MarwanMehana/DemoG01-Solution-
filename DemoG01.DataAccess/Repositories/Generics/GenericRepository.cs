@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,11 +25,15 @@ namespace DemoG01.DataAccess.Repositories.Generics
         {
             if (withTracking)
             {
-                return _dbContext.Set<TEntity>().ToList();
+                return _dbContext.Set<TEntity>().Where(T => T.IsDeleted != true).ToList();
             }
             else
             {
-                return _dbContext.Set<TEntity>().AsNoTracking().ToList();
+                return _dbContext.Set<TEntity>().Where(T => T.IsDeleted != true).AsNoTracking().ToList();
+            }
+            public IEnumerable<TResult> GetAll<TResult>(Expression<Func<TEntity, TResult>> selector)
+            {
+                return _dbContext.Set<TEntity>().Where(E => E.IsDeleted != true).Select(selector);
             }
         }
         // Get By Id
@@ -55,6 +60,16 @@ namespace DemoG01.DataAccess.Repositories.Generics
         {
             _dbContext.Remove(entity);
             return _dbContext.SaveChanges();
+        }
+
+        public IEnumerable<TEntity> GetEnumerable()
+        {
+            return _dbContext.Set<TEntity>().Where(T => T.IsDeleted != true).ToList();
+        }
+
+        public IQueryable<TEntity> GetQueryable()
+        {
+            return _dbContext.Set<TEntity>().Where(T => T.IsDeleted != true);
         }
     }
 }

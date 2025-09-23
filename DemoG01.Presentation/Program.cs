@@ -2,6 +2,9 @@ using DemoG01.BusinessLogic.Services.Classes;
 using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Data.Contexts;
 using DemoG01.DataAccess.Repositories.Departments;
+using DemoG01.DataAccess.Repositories.Employees;
+using DemoG03.BusinessLogic.Profiles;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoG01.Presentation
@@ -13,6 +16,10 @@ namespace DemoG01.Presentation
             var builder = WebApplication.CreateBuilder(args);
 
             #region Add services to the container
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             //builder.Services.AddScoped<ApplicationDbContext>();
@@ -24,6 +31,11 @@ namespace DemoG01.Presentation
             });
             builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
             builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+
+            builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfiles()));
             #endregion
 
             var app = builder.Build();
@@ -46,7 +58,7 @@ namespace DemoG01.Presentation
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             #endregion
-            app.Run();
+            app.Run(); 
         }
     }
 }
