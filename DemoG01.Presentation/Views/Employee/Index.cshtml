@@ -38,6 +38,9 @@
                     <td>@employee.IsActive</td>
                     <td>@employee.Gender</td>
 
+                    @* @Html.Partial("_ButtonsPartialView", employee.Id) *@
+                    <partial name="_ButtonsPartialView" model="employee.Id" />
+
                     <td>
                         <a class="btn btn-primary" asp-action="Details" asp-route-id="@employee.Id">
                             <i class="fas fa-eye"></i> Details

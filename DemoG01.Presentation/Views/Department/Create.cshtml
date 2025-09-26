@@ -15,19 +15,7 @@
             <input asp-for="Code" class="form-control" />
             <span asp-validation-for="Code" class="text-danger"></span>
         </div>
-        <div class="form-group mb-3">
-            <label class="form-label" asp-for="Name"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="form-group mb-3">
-            <label class="form-label" asp-for="Description"></label>
-            <textarea class="form-control" asp-for="Description"></textarea>
-        </div>
-        <div class="form-group mb-3">
-            <label class="form-label" asp-for="DateofCreation"></label>
-            <input type="date" asp-for="DateofCreation" class="form-control" />
-        </div>
+        
         <div class="mt-4 m-auto">
             <input class="btn btn-primary" type="submit" value="Create" />
             <a class="btn btn-outline-dark">Back to list</a>
