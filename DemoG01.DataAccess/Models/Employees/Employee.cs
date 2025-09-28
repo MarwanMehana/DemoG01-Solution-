@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoG01.DataAccess.Models.Departments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,8 @@ namespace DemoG01.DataAccess.Models.Employees
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
         public bool IsActive { get; set; }
+        public int? DepartmentId { get; set; }
+        public virtual Department? Department { get; set; }
+
     }
 }

@@ -1,7 +1,11 @@
 ﻿using DemoG01.BusinessLogic.DTOs.Employees;
+using DemoG01.BusinessLogic.Services.Classes;
 using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Models.Employees;
+using DemoG01.Presentation.Controllers;
+using DemoG01.Presentation.ViewModels.Employees;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace DemoG01.Presentation.Controllers
 
@@ -9,16 +13,19 @@ namespace DemoG01.Presentation.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
-        private readonly IEmployeeService _Logger;
+        private readonly ILogger<EmployeeController> _logger;
         private readonly IWebHostEnvironment _env;
 
 
         public EmployeeController(IEmployeeService employeeService,
-            ILogger<EmployeeController>Logger,
-            IWebHostEnvironment env)
+                                     ILogger<EmployeeController> logger,
+                                     IWebHostEnvironment env
+                                     )
         {
-            this.employeeService = employeeService;
+            _employeeService = employeeService;
+            _logger = logger;
             _env = env;
+            
         }
 
 
@@ -31,18 +38,35 @@ namespace DemoG01.Presentation.Controllers
 
         #region Create
         // Get: baseUrl/Employees/Create
+        // Show the form
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Create(CreatedEmployeeDto employeeDto)
+        public IActionResult Create(EmployeeViewModel employeeVM)
         {
             // Server-Side Validation
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var employeeDto = new CreatedEmployeeDto()
+                    {
+                        Name = employeeVM.Name,
+                        Email = employeeVM.Email,
+                        Address = employeeVM.Address,
+                        PhoneNumber = employeeVM.PhoneNumber,
+                        Age = employeeVM.Age,
+                        Salary = employeeVM.Salary,
+                        IsActive = employeeVM.IsActive,
+                        HiringDate = employeeVM.HiringDate,
+                        Gender = employeeVM.Gender,
+                        EmployeeType = employeeVM.EmployeeType,
+                        DepartmentId = employeeVM.DepartmentId
+                    };
                     var result = _employeeService.CreateEmployee(employeeDto);
                     if (result > 0)
                     {
@@ -61,7 +85,7 @@ namespace DemoG01.Presentation.Controllers
                         _Logger.LogError(ex.Message);
                 }
             }
-            return View(employeeDto);
+            return View(employeeVM);
         }
         #endregion
 
@@ -87,31 +111,45 @@ namespace DemoG01.Presentation.Controllers
             if (id is null) return BadRequest(); // 400
             var employee = _employeeService.GetEmployeeById(id.Value);
             if (employee is null) return NotFound();
-            return View(new UpdatedEmployeeDto()
+            return View(new EmployeeViewModel()
             {
-                Id = id.Value,
                 Name = employee.Name,
-                Address = employee.Address,
-                Age = employee.Age,
                 Email = employee.Email,
+                Age = employee.Age,
+                Address = employee.Address,
                 PhoneNumber = employee.PhoneNumber,
                 Salary = employee.Salary,
                 IsActive = employee.IsActive,
                 HiringDate = employee.HiringDate,
                 Gender = Enum.Parse<Gender>(employee.Gender),
-                EmployeeType = Enum.Parse<EmployeeType>(employee.EmployeeType)
+                EmployeeType = Enum.Parse<EmployeeType>(employee.EmployeeType),
+                DepartmentId = employee.DepartmentId
             });
         }
 
         [HttpPost]
         //[ValidateAntiForgeryToken] // Action Filter
-        public IActionResult Edit([FromRoute] int? id, UpdatedEmployeeDto employeeDto)
+        public IActionResult Edit([FromRoute] int? id, EmployeeViewModel employeeVM)
         {
-            if (id is null || id != employeeDto.Id) return BadRequest();
+            if (id is null) return BadRequest();
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var employeeDto = new UpdatedEmployeeDto()
+                    {
+                        Id = id.Value,
+                        Name = employeeVM.Name,
+                        Email = employeeVM.Email,
+                        Address = employeeVM.Address,
+                        Salary = employeeVM.Salary,
+                        Age = employeeVM.Age,
+                        PhoneNumber = employeeVM.PhoneNumber,
+                        IsActive = employeeVM.IsActive,
+                        HiringDate = employeeVM.HiringDate,
+                        Gender = employeeVM.Gender,
+                        EmployeeType = employeeVM.EmployeeType
+                    };
                     var result = _employeeService.UpdateEmployee(employeeDto);
                     if (result > 0)
                         return RedirectToAction(nameof(Index));
@@ -126,7 +164,7 @@ namespace DemoG01.Presentation.Controllers
                         _Logger.LogError(ex.Message);
                 }
             }
-            return View(employeeDto);
+            return View(employeeVM);
         }
         #endregion
 

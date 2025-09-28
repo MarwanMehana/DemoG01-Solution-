@@ -1,4 +1,5 @@
-﻿using DemoG01.BusinessLogic.DataTransferObjects;
+﻿using DemoG01.BusinessLogic.DTOs;
+using DemoG01.BusinessLogic.DTOs.Departments;
 using DemoG01.BusinessLogic.Factories;
 using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Models;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DemoG01.BusinessLogic.Services.Classes
 {
-    public class DepartmentServices : IDepartmentServices
+    public class DepartmentService : IDepartmentServices
     {
         private readonly IDepartmentRepository _departmentRepository;
 
@@ -81,6 +82,87 @@ namespace DemoG01.BusinessLogic.Services.Classes
             }
         }
 
+        public int AddDepartment(CreatedDepartmentDto departmentDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<DepartmentDto> IDepartmentServices.AllDepartments => throw new NotImplementedException();
+
+        DepartmentDetailsDto? IDepartmentServices.GetDepartmentById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddDepartment(CreatedDepartmentDto departmentDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<DepartmentDto> IDepartmentServices.GetAllDepartments()
+        {
+            throw new NotImplementedException();
+        }
+
+        DepartmentDetailsDto? IDepartmentServices.GetDepartmentById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IDepartmentServices.AddDepartment(CreatedDepartmentDto departmentDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IDepartmentServices.DeleteDepartment(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<DepartmentDto> IDepartmentServices.GetAllDepartments()
+        {
+            throw new NotImplementedException();
+        }
+
+        DepartmentDetailsDto? IDepartmentServices.GetDepartmentById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IDepartmentServices.UpdateDepartment(UpdatedDepartmentDto departmentDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddDepartment(CreatedDepartmentDto departmentDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<DepartmentDto> IDepartmentServices.GetAllDepartments()
+        {
+            throw new NotImplementedException();
+        }
+
+        DepartmentDetailsDto? IDepartmentServices.GetDepartmentById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using DemoG01.BusinessLogic.DataTransferObjects;
+﻿ using DemoG01.BusinessLogic.DTOs;
+using DemoG01.BusinessLogic.DTOs.Departments;
 
 namespace DemoG01.BusinessLogic.Services.Interfaces
 {
@@ -6,8 +7,10 @@ namespace DemoG01.BusinessLogic.Services.Interfaces
     {
         int AddDepartment(CreatedDepartmentDto departmentDto);
         bool DeleteDepartment(int id);
-        IEnumerable<DepartmentDto> GetAllDepartments();
+        IEnumerable<DepartmentDto> AllDepartments { get; }
+
         DepartmentDetailsDto? GetDepartmentById(int id);
         int UpdateDepartment(UpdatedDepartmentDto departmentDto);
+        IEnumerable<DepartmentDto> GetAllDepartments();
     }
 }

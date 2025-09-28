@@ -15,11 +15,12 @@
             <tr>
                 <th>@Html.DisplayNameFor(e => e.Name)</th>
                 <th>@Html.DisplayNameFor(e => e.Email)</th>
-                <th>@Html.DisplayNameFor(e => e.EmployeeType)</th>
+                <th>@Html.DisplayNameFor(e => e.EmpType)</th>
                 <th>@Html.DisplayNameFor(e => e.Age)</th>
+                <th>@Html.DisplayNameFor(e => e.DepartmentName)</th>
                 <th>@Html.DisplayNameFor(e => e.Salary)</th>
                 <th>@Html.DisplayNameFor(e => e.IsActive)</th>
-                <th>@Html.DisplayNameFor(e => e.Gender)</th>
+                <th>@Html.DisplayNameFor(e => e.EmpGender)</th>
                 <th>Details </th>
                 <th>Update</th>
                 <th>Delete</th>
@@ -32,11 +33,12 @@
 
                     <td>@employee.Name</td>
                     <td>@employee.Email</td>
-                    <td>@employee.EmployeeType</td>
+                    <td>@employee.EmpType</td>
                     <td>@employee.Age</td>
+                    <td>@employee.DepartmentName</td>
                     <td>@employee.Salary</td>
                     <td>@employee.IsActive</td>
-                    <td>@employee.Gender</td>
+                    <td>@employee.EmpGender</td>
 
                     @* @Html.Partial("_ButtonsPartialView", employee.Id) *@
                     <partial name="_ButtonsPartialView" model="employee.Id" />

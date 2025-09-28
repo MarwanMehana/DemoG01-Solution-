@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace DemoG01.BusinessLogic.DTOs.Employees
 {
     public class CreatedEmployeeDto
@@ -40,6 +41,6 @@ namespace DemoG01.BusinessLogic.DTOs.Employees
         public Gender Gender { get; set; }
 
         public EmployeeType EmployeeType { get; set; }
-
+        public int? DepartmentId { get; set; }
     }
 }

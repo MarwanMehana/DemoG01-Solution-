@@ -26,5 +26,8 @@ namespace DemoG01.BusinessLogic.DTOs.Employees
 
         [Display(Name = "Employee Type")]
         public string EmpType { get; set; } = null!;
+        [Display(Name= "Department")]
+        public string? DepartmentName { get; set; }
+
     }
 }

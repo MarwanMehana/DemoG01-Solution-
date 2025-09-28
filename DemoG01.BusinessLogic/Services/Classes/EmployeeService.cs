@@ -100,5 +100,25 @@ namespace DemoG01.BusinessLogic.Services.Classes
             ///if(result > 0) return true;
             ///else return false;
         }
+
+        public string? GetAllEmployees()
+        {
+            throw new NotImplementedException();
+        }
+
+        string? IEmployeeService.GetEmployeeById(int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LogError()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LogError(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,6 +5,6 @@ namespace DemoG01.DataAccess.Repositories.Departments
 {
     public interface IDepartmentRepository : IGenericRepository<Department>
     {
-        
+        IEnumerable<object> GetALL();
     }
 }
