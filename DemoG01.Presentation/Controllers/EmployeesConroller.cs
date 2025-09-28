@@ -30,9 +30,9 @@ namespace DemoG01.Presentation.Controllers
 
 
         // Master Action
-        public IActionResult Index()
+        public IActionResult Index(string? employeeSearchName)
         {
-            var employees = _employeeService.GetAllEmployees(); 
+            var employees = _employeeService.GetAllEmployees(employeeSearchName);
             return View(employees);
         }
 

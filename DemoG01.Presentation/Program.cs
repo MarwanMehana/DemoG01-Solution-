@@ -20,6 +20,8 @@ namespace DemoG01.Presentation
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
+
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             //builder.Services.AddScoped<ApplicationDbContext>();

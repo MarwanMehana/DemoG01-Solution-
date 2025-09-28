@@ -12,6 +12,7 @@ namespace DemoG01.BusinessLogic.Services.Interfaces
         int CreateEmployee(CreatedEmployeeDto employeeDto);
         bool DeleteEmployee(int value);
         string? GetAllEmployees();
+        string? GetAllEmployees(string? employeeSearchName);
         string? GetEmployeeById(int value);
         void LogError();
         void LogError(string message);
@@ -19,7 +20,7 @@ namespace DemoG01.BusinessLogic.Services.Interfaces
 
         public interface IEmployeeService
         {
-            IEnumerable<EmployeeDto> GetAllEmployees(bool withTracking = false);
+            IEnumerable<EmployeeDto> GetAllEmployees(string? EmployeeSearchName,bool withTracking = false);
             EmployeeDetailsDto? GetEmployeeById(int id);
             int CreateEmployee(CreatedEmployeeDto employeeDto);
             int UpdateEmployee(EmployeeDto employeeDto);

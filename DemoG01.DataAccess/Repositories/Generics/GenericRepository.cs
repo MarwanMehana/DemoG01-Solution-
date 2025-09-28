@@ -31,10 +31,10 @@ namespace DemoG01.DataAccess.Repositories.Generics
             {
                 return _dbContext.Set<TEntity>().Where(T => T.IsDeleted != true).AsNoTracking().ToList();
             }
-            public IEnumerable<TResult> GetAll<TResult>(Expression<Func<TEntity, TResult>> selector)
-            {
-                return _dbContext.Set<TEntity>().Where(E => E.IsDeleted != true).Select(selector);
-            }
+        }
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
+        {
+           return _dbContext.Set<TEntity>().Where(predicate).ToList();
         }
         // Get By Id
         public TEntity? GetById(int id)
@@ -71,5 +71,12 @@ namespace DemoG01.DataAccess.Repositories.Generics
         {
             return _dbContext.Set<TEntity>().Where(T => T.IsDeleted != true);
         }
+
+        public IEnumerable<TEntity> GetAll<TResult>(Expression<Func<TEntity, TResult>> selector)
+        {
+            throw new NotImplementedException();
+        }
+
+       
     }
 }

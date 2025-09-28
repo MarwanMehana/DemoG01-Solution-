@@ -15,6 +15,7 @@ namespace DemoG01.BusinessLogic.Services.Classes
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
+        private IEnumerable<Employee> employees;
 
         public EmployeeService(IEmployeeRepository employeeRepository,
             IMapper mapper)
@@ -23,10 +24,17 @@ namespace DemoG01.BusinessLogic.Services.Classes
           _mapper = mapper;
         }
 
-        public IEnumerable<EmployeeDto> GetAllEmployees(bool withTracking = false)
+        public IEnumerable<EmployeeDto> GetAllEmployees(string? EmployeeSearchName,bool withTracking = false)
         {
-            //var employees = _employeeRepository.GetAll(withTracking);
-           
+            IEnumerable<Employee> employees;
+            if (string.IsNullOrWhiteSpace(EmployeeSearchName))
+            {
+                 employees = _employeeRepository.GetAll(withTracking);
+            }
+            else
+            {
+                 employees = _employeeRepository.GetAll(E => E.Name.ToLower().Contains(EmployeeSearchName.ToLower())
+            }
             // TSource => Src => Employee
             // TDestination => Dist => EmployeeDto
             var employeesToReturn = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
@@ -117,6 +125,11 @@ namespace DemoG01.BusinessLogic.Services.Classes
         }
 
         public void LogError(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string? GetAllEmployees(string? employeeSearchName)
         {
             throw new NotImplementedException();
         }
