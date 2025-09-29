@@ -10,6 +10,8 @@ namespace DemoG01.BusinessLogic.DTOs.Employees
 {
     public class UpdatedEmployeeDto
     {
+        public int? DepartmentId;
+
         public int Id { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "Name Should be less than 50 char")]

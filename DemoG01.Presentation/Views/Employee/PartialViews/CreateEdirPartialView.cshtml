@@ -2,12 +2,17 @@
 @model EmployeeViewModel
 @inject IDepartmentServices departmentService
 @{
-    var Departments = new SelectList(departmentService.GetAllDepartments(), "Id", nameof(DepartmentDto.Name));
+    var Departments = new SelectList(departmentService.AllDepartments1, "Id", nameof(DepartmentDto.Name));
 }
 }<div class="form-group mb-3 col-6">
     <label class="form-label" asp-for="Name"></label>
     <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="Image"></label>
+    <input asp-for="Image" class="form-control" />
+    <span asp-validation-for="Image" class="text-danger"></span>
 </div>
 <div class="form-group mb-3 col-6">
     <label class="form-label" asp-for="Email"></label>

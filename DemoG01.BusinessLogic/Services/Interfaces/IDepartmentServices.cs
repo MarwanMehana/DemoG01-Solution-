@@ -11,6 +11,6 @@ namespace DemoG01.BusinessLogic.Services.Interfaces
 
         DepartmentDetailsDto? GetDepartmentById(int id);
         int UpdateDepartment(UpdatedDepartmentDto departmentDto);
-        IEnumerable<DepartmentDto> GetAllDepartments();
+        IEnumerable<DepartmentDto> AllDepartments1 { get; }
     }
 }

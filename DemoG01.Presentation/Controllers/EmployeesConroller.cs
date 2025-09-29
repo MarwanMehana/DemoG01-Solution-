@@ -65,7 +65,8 @@ namespace DemoG01.Presentation.Controllers
                         HiringDate = employeeVM.HiringDate,
                         Gender = employeeVM.Gender,
                         EmployeeType = employeeVM.EmployeeType,
-                        DepartmentId = employeeVM.DepartmentId
+                        DepartmentId = employeeVM.DepartmentId,
+                        Image = employeeVM.Image
                     };
                     var result = _employeeService.CreateEmployee(employeeDto);
                     if (result > 0)
@@ -113,7 +114,7 @@ namespace DemoG01.Presentation.Controllers
             if (employee is null) return NotFound();
             return View(new EmployeeViewModel()
             {
-                Name = employee.Name,
+                Name = employeeVM.Name,
                 Email = employee.Email,
                 Age = employee.Age,
                 Address = employee.Address,
@@ -124,6 +125,7 @@ namespace DemoG01.Presentation.Controllers
                 Gender = Enum.Parse<Gender>(employee.Gender),
                 EmployeeType = Enum.Parse<EmployeeType>(employee.EmployeeType),
                 DepartmentId = employee.DepartmentId
+
             });
         }
 
@@ -148,7 +150,8 @@ namespace DemoG01.Presentation.Controllers
                         IsActive = employeeVM.IsActive,
                         HiringDate = employeeVM.HiringDate,
                         Gender = employeeVM.Gender,
-                        EmployeeType = employeeVM.EmployeeType
+                        EmployeeType = employeeVM.EmployeeType,
+                        DepartmentId = employeeVM.DepartmentId
                     };
                     var result = _employeeService.UpdateEmployee(employeeDto);
                     if (result > 0)

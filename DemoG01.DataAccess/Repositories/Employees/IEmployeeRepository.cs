@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace DemoG01.DataAccess.Repositories.Employees
 {
-    public interface IEmployeeRepository: IGenericRepository<Employee>
+    public interface IEmployeeRepository : IGenericRepository<Employee>
     {
-       
+        void Add(object employee);
     }
 }

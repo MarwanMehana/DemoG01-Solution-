@@ -3,6 +3,7 @@ using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Data.Contexts;
 using DemoG01.DataAccess.Repositories.Departments;
 using DemoG01.DataAccess.Repositories.Employees;
+using DemoG01.DataAccess.Repositories.UoW;
 using DemoG03.BusinessLogic.Profiles;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,12 +34,14 @@ namespace DemoG01.Presentation
                 options.UseLazyLoadingProxies();
             });
             builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
-            builder.Services.AddScoped<IDepartmentServices, DepartmentService>();
+            builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 
             builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfiles()));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
             #endregion
 
             var app = builder.Build();

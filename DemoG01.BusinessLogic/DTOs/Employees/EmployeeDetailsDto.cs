@@ -27,5 +27,6 @@ namespace DemoG01.BusinessLogic.DTOs.Employees
         public int?  DepartmentId { get; set; }
         [Display(Name = "Department")]
         public string? DepartmentName { get; set; }
+        public string? Image { get; set; }
     }
 }

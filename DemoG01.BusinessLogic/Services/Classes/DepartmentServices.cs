@@ -4,6 +4,7 @@ using DemoG01.BusinessLogic.Factories;
 using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Models;
 using DemoG01.DataAccess.Repositories.Departments;
+using DemoG01.DataAccess.Repositories.UoW;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,157 +13,102 @@ using System.Threading.Tasks;
 
 namespace DemoG01.BusinessLogic.Services.Classes
 {
-    public class DepartmentService : IDepartmentServices
+    public class DepartmentServices : IDepartmentServices
     {
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DepartmentServices(IDepartmentRepository departmentRepository)
+        public DepartmentServices(IUnitOfWork unitOfWork)
         {
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
+        }
+        public IEnumerable<DepartmentDto> AllDepartments1
+        {
+            get
+            {
+                var departments = _unitOfWork.DepartmentRepository.GetAll();
+                var departmentsToReturn = departments.Select(D => D.ToDepartmentDto());
+                return departmentsToReturn;
+            }
         }
 
-        public IEnumerable<DepartmentDto> GetAllDepartments()
-        {
-            var departments = _departmentRepository.GetALL();
-            var departmentsToReturn = departments.Select(D => D.ToDepartmentDto());
-            return departmentsToReturn;
-        }
-
-        public DepartmentDetailsDto? GetDepartmentById(int id)
-        {
-            var department = _departmentRepository.GetById(id);
-
-            ///if (department is null)
-            ///{
-            ///    return null;
-            ///}
-            ///else
-            ///{
-            ///    return new DepartmentDetailsDto()
-            ///    {
-            ///        Id = department.Id,
-            ///        Name = department.Name,
-            ///        Code = department.Code,
-            ///        Description = department.Description,
-            ///        CreatedBy = department.CreatedBy,
-            ///        LastModifiedBy = department.LastModifiedBy,
-            ///        DateofCreation = DateOnly.FromDateTime(department.CreatedOn ?? DateTime.Now),
-            ///        IsDeleted = department.IsDeleted
-            ///    };
-
-            // Manual Mapping
-            // AutoMapper
-            // Constructor Mapping
-            //Extension Method
-            return department == null ? null : department.ToDepartmentDetailsDto();
-
-        }
+        public IEnumerable<DepartmentDto> AllDepartments => throw new NotImplementedException();
 
         public int AddDepartment(CreatedDepartmentDto departmentDto)
         {
-            return _departmentRepository.Add(departmentDto.ToEntity());
-        }
-
-        public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
-        {
-            return _departmentRepository.Update(departmentDto.ToEntity());
+            throw new NotImplementedException();
         }
 
         public bool DeleteDepartment(int id)
         {
-            var department = _departmentRepository.GetById(id);
-            if (department is null)
-            {
-                return false;
-            }
-            else
-            {
-                var result = _departmentRepository.Remove(department);
-                return result > 0;
-            }
-        }
-
-        public int AddDepartment(CreatedDepartmentDto departmentDto)
-        {
             throw new NotImplementedException();
         }
 
-        IEnumerable<DepartmentDto> IDepartmentServices.AllDepartments => throw new NotImplementedException();
-
-        DepartmentDetailsDto? IDepartmentServices.GetDepartmentById(int id)
+        public IEnumerable<DepartmentDto> GetAllDepartments()
         {
-            throw new NotImplementedException();
+            var departments = _unitOfWork.DepartmentRepository.GetAll();
+            var departmentsToReturn = departments.Select(D => D.ToDepartmentDto());
+            return departmentsToReturn;
         }
+    }
+    public DepartmentDetailsDto? GetDepartmentById(int id)
+    {
+        var department = _unitOfWork.DepartmentRepository.GetById(id);
+        return department?.ToDepartmentDetailsDto();
 
-        public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
+        ///if (department is null)
+        ///{
+        ///    return null;
+        ///}
+        ///else
+        ///{
+        ///    return new DepartmentDetailsDto()
+        ///    {
+        ///        Id = department.Id,
+        ///        Name = department.Name,
+        ///        Code = department.Code,
+        ///        Description = department.Description,
+        ///        CreatedBy = department.CreatedBy,
+        ///        LastModifiedBy = department.LastModifiedBy,
+        ///        DateofCreation = DateOnly.FromDateTime(department.CreatedOn ?? DateTime.Now),
+        ///        IsDeleted = department.IsDeleted
+        ///    };
+
+        // Manual Mapping
+        // AutoMapper
+        // Constructor Mapping
+        //Extension Method
+        return department == null ? null : department.ToDepartmentDetailsDto();
+
+    }
+    public int AddDepartment(CreatedDepartmentDto departmentDto)
+    {
+        _unitOfWork.DepartmentRepository.Add(departmentDto.ToEntity());
+        return _unitOfWork.SaveChanges();
+    }
+
+    public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
+    {
+        _unitOfWork.DepartmentRepository.Update(departmentDto.ToEntity());
+        return _unitOfWork.SaveChanges();
+    }
+
+    public bool DeleteDepartment(int id)
+    {
+        var department = _unitOfWork.DepartmentRepository.GetById(id);
+        if (department is null)
         {
-            throw new NotImplementedException();
+            return false;
         }
-
-        public int AddDepartment(CreatedDepartmentDto departmentDto)
+        else
         {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<DepartmentDto> IDepartmentServices.GetAllDepartments()
-        {
-            throw new NotImplementedException();
-        }
-
-        DepartmentDetailsDto? IDepartmentServices.GetDepartmentById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IDepartmentServices.AddDepartment(CreatedDepartmentDto departmentDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IDepartmentServices.DeleteDepartment(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<DepartmentDto> IDepartmentServices.GetAllDepartments()
-        {
-            throw new NotImplementedException();
-        }
-
-        DepartmentDetailsDto? IDepartmentServices.GetDepartmentById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IDepartmentServices.UpdateDepartment(UpdatedDepartmentDto departmentDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int AddDepartment(CreatedDepartmentDto departmentDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<DepartmentDto> IDepartmentServices.GetAllDepartments()
-        {
-            throw new NotImplementedException();
-        }
-
-        DepartmentDetailsDto? IDepartmentServices.GetDepartmentById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
-        {
-            throw new NotImplementedException();
+            _unitOfWork.DepartmentRepository.Remove(department);
+            var result = _unitOfWork.SaveChanges();
+            return result > 0;
         }
     }
 }
+
+
+
+
 

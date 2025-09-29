@@ -3,6 +3,7 @@ using DemoG01.BusinessLogic.DTOs.Employees;
 using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Models.Employees;
 using DemoG01.DataAccess.Repositories.Employees;
+using DemoG01.DataAccess.Repositories.UoW;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +14,20 @@ namespace DemoG01.BusinessLogic.Services.Classes
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IUnitOfWork _unitofwork;
         private readonly IMapper _mapper;
         private IEnumerable<Employee> employees;
+        private object _unitOfWork;
+        private readonly IAttachmentService _attachmentService;
+        private readonly object employee;
 
-        public EmployeeService(IEmployeeRepository employeeRepository,
-            IMapper mapper)
+        public EmployeeService(IUnitOfWork unitofwork,
+                               IMapper mapper,
+                              IAttachmentService attachmentService)
         {
-            _employeeRepository = employeeRepository;
-          _mapper = mapper;
+            _unitofwork = unitofwork;
+            _mapper = mapper;
+            _attachmentService = attachmentService;
         }
 
         public IEnumerable<EmployeeDto> GetAllEmployees(string? EmployeeSearchName,bool withTracking = false)
@@ -29,11 +35,11 @@ namespace DemoG01.BusinessLogic.Services.Classes
             IEnumerable<Employee> employees;
             if (string.IsNullOrWhiteSpace(EmployeeSearchName))
             {
-                 employees = _employeeRepository.GetAll(withTracking);
+                 employees = _unitofwork.EmployeeRepository.GetAll(withTracking);
             }
             else
             {
-                 employees = _employeeRepository.GetAll(E => E.Name.ToLower().Contains(EmployeeSearchName.ToLower())
+                 employees = _unitofwork.EmployeeRepository.GetAll(E => E.Name.ToLower().Contains(EmployeeSearchName.ToLower())
             }
             // TSource => Src => Employee
             // TDestination => Dist => EmployeeDto
@@ -55,7 +61,7 @@ namespace DemoG01.BusinessLogic.Services.Classes
         }
         public EmployeeDetailsDto? GetEmployeeById(int id)
         {
-            var employee = _employeeRepository.GetById(id);
+            var employee = _unitofwork.EmployeeRepository.GetById(id);
             if (employee == null)
             {
                 return null;
@@ -82,32 +88,34 @@ namespace DemoG01.BusinessLogic.Services.Classes
         public int CreateEmployee(CreatedEmployeeDto employeeDto)
         {
             var employee = _mapper.Map<CreatedEmployeeDto, Employee>(employeeDto);
-            return _employeeRepository.Add(employee);
+            if (employeeDto.Image is not null)
+            {
+                employee.ImageName = _attachmentService.Upload(employeeDto.Image, "Images");
+            }
+            _unitofwork.EmployeeRepository.Add(employee);
+            return _unitofwork.SaveChanges();
         }
 
         public int UpdateEmployee(UpdatedEmployeeDto employeeDto)
         {
-            return _employeeRepository.Update(_mapper.Map<UpdatedEmployeeDto, Employee>(employeeDto));
+            _unitofwork.EmployeeRepository.Update(_mapper.Map<UpdatedEmployeeDto, Employee>(employeeDto));
+            return _unitofwork.SaveChanges();
         }
 
         public bool DeleteEmployee(int id)
         {
-            var employee = _employeeRepository.GetById(id);
-            if (employee is null)
-            {
-                return false;
-            }
+            var employee = _unitofwork.EmployeeRepository.GetById(id);
+            if (employee is null) return false;
             employee.IsDeleted = true;
-            var result = _employeeRepository.Update(employee);
-            if (result > 0)
-                return true;
-            else
-                return false;
-            /// Hard Delete
-            ///var result = _employeeRepository.Remove(employee);
-            ///if(result > 0) return true;
-            ///else return false;
-        }
+            _unitofwork.EmployeeRepository.Update(employee);
+            var result = _unitofwork.SaveChanges();
+            if (result > 0) return true;
+            return false;
+        /// Hard Delete
+        ///var result = _employeeRepository.Remove(employee);
+        ///if(result > 0) return true;
+        ///else return false;
+    }
 
         public string? GetAllEmployees()
         {
