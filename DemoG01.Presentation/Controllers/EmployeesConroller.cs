@@ -4,12 +4,13 @@ using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Models.Employees;
 using DemoG01.Presentation.Controllers;
 using DemoG01.Presentation.ViewModels.Employees;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace DemoG01.Presentation.Controllers
-
-{ 
+{
+    [Authorize]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;

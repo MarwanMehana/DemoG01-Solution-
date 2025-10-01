@@ -1,12 +1,14 @@
-﻿using DemoG01.BusinessLogic.DataTransferObjects;
+﻿using DemoG01.BusinessLogic.DTOs;
 using DemoG01.BusinessLogic.Services.Classes;
 using DemoG01.BusinessLogic.Services.Interfaces;
 using DemoG01.DataAccess.Models.Departments;
 using DemoG01.Presentation.ViewModels.Departments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoG01.Presentation.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
         private readonly IDepartmentServices _departmentservices;

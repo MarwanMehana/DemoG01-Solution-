@@ -5,6 +5,7 @@ namespace DemoG01.Presentation.ViewModels.Employees
 {
     public class EmployeeViewModel
     {
+        internal readonly int Id;
 
         [Required]
         [MaxLength(50, ErrorMessage = "Name Should be less than 50 char")]

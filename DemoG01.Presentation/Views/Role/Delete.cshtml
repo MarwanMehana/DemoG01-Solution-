@@ -1,0 +1,15 @@
+﻿@model EmployeeDetailsDto
+
+<h2>Delete Role</h2>
+
+<h3>Are you sure you want to delete this role?</h3>
+
+<div>
+    <strong>@Model.Name</strong>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Delete</button>
+    <a asp-action="Index">Cancel</a>
+</form>
