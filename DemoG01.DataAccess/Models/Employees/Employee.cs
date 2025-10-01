@@ -21,7 +21,7 @@ namespace DemoG01.DataAccess.Models.Employees
         public bool IsActive { get; set; }
         public int? DepartmentId { get; set; }
         public virtual Department? Department { get; set; }
-
+        //.
         public string? ImageName{ get; set; }
     }
 }
